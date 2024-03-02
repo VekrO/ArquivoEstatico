@@ -1,5 +1,5 @@
 import { HtmlRootElement } from "./HtmlRootElement";
-import './styles.css'
+import { styles } from "./RootElementStyle";
 
 class Main {
 
@@ -36,7 +36,7 @@ class Main {
     }
 
     private configureRootElement(element: HtmlRootElement) {
-        element.classList.add('vokz-feedback-style');
+        Object.assign(element.style, styles);
     }
 
     private attachRootElementInDom(element: HtmlRootElement) {
