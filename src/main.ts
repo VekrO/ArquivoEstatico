@@ -26,6 +26,7 @@ class Main {
     private createRootElement() {
         try {
             const element: HtmlRootElement = document.createElement('div');
+            this.addCss();
             element.innerText = 'V';
             element.addEventListener('click', (e: MouseEvent) => this.rootClickEventHandler(e));
             element.classList.add('vokz-feedback');
@@ -46,6 +47,13 @@ class Main {
     private rootClickEventHandler(event: MouseEvent) {
         console.log('ESTÁ DISPARANDO O EVENTO DO SITE COM URL: ', window.location);
         console.log('EVENTO DISPARADO ', event);
+    }
+
+    private addCss() {
+        const link: HTMLLinkElement = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://vekro.github.io/ArquivoEstatico/dist/main.css';
+        document.head.appendChild(link);
     }
 
 }
