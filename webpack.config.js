@@ -31,7 +31,13 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Projeto',
-            template: 'src/index.html'
+            template: 'src/index.html',
+            chunks: ['main']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'widget.html',
+            template: 'src/widget.html',
+            chunks: ['widget']
         }),
         new MiniCssExtractPlugin()
     ]

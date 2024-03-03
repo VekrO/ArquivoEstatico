@@ -1,7 +1,11 @@
-import { HtmlRootElement } from "./HtmlRootElement";
-import './styles.css'
+
+import { FeedbackService } from "./services/FeedbackService";
+
+import './styles/styles.css';
 
 class Main {
+
+    private feedbackService: FeedbackService = new FeedbackService();
 
     constructor() {
         this.init();
@@ -9,52 +13,79 @@ class Main {
 
     private init() {
 
-        // Deve verificar se já existe o elemento na tela, caso contrário, cria.
         try {
-            const element: HtmlRootElement = document.querySelector('.vokz-feedback');
-            if(!element) {
-                const element: HtmlRootElement = this.createRootElement();
-                this.configureRootElement(element);
-                this.attachRootElementInDom(element);
+            
+            const button: HTMLButtonElement = document.querySelector('[data-vokz]');
+            if(!button) {
+                console.log('[Vokz Feedback]: Você não configurou corretamente o projeto para trabalhar com o Vokz Feedback');
+                return;
             }
+
+            let iframe: HTMLIFrameElement = document.querySelector('.vokz-iframe');
+                
+            if(!iframe) {
+                iframe = document.createElement('iframe');
+                // Passar o site com o iframe.
+                iframe.src = 'http://localhost:4000/widget.html';
+                iframe.classList.add('vokz-iframe');
+                document.body.appendChild(iframe);
+            }
+
+            if(iframe) {
+                const buttonClose = iframe.querySelector('.button-close');
+                console.log('button close: ', buttonClose);
+            }
+
+            this.configure(button, iframe);
+
         } catch (error) {
             throw error;
         }
 
     }
 
-    private createRootElement() {
-        try {
-            const element: HtmlRootElement = document.createElement('div');
-            this.addCss();
-            element.innerText = 'V';
-            element.addEventListener('click', (e: MouseEvent) => this.rootClickEventHandler(e));
-            element.classList.add('vokz-feedback');
-            return element;
-        } catch(error) {
-            throw error;
+    public configure(button: HTMLButtonElement, iframe: HTMLIFrameElement) {
+
+        console.log('BUTTON: ', button);
+        console.log('IFRAME: ', iframe);
+
+        const buttonRect = button.getBoundingClientRect();
+        const iframeRect = iframe.getBoundingClientRect();
+
+        // Espaço entre o botão e o iframe
+        var gap = 30; // 5 pixels de espaço
+
+        // Verifica a posição horizontal
+        if (buttonRect.left + iframeRect.width + gap > window.innerWidth) {
+            iframe.style.left = (window.innerWidth - iframeRect.width - gap) + 'px';
+        } else {
+            iframe.style.left = (buttonRect.left + gap) + 'px';
         }
+
+        // Verifica a posição vertical
+        if (buttonRect.top + buttonRect.height + iframeRect.height + gap > window.innerHeight) {
+            iframe.style.top = (window.innerHeight - iframeRect.height - gap) + 'px';
+        } else {
+            iframe.style.top = (buttonRect.top + buttonRect.height + gap) + 'px';
+        }
+
+        
+        button.addEventListener('click', (event) => this.buttonClick(event, button, iframe));
+
     }
 
-    private configureRootElement(element: HtmlRootElement) {
-        element.classList.add('vokz-feedback-style');
+    private buttonClick(event: MouseEvent, button: HTMLButtonElement, iframe: HTMLIFrameElement) {
+
+        console.log('DEU UM CLICK NO FEEDBACK BUTTON DO VOKZ :', event);
+        if(!iframe) {
+            console.log('[Vokz Feedback] - O iframe não foi encontrado!');
+            return;
+        }
+
+        iframe.classList.toggle('hidden');
+
     }
 
-    private attachRootElementInDom(element: HtmlRootElement) {
-        document.querySelector('body').appendChild(element);
-    }
-    
-    private rootClickEventHandler(event: MouseEvent) {
-        console.log('ESTÁ DISPARANDO O EVENTO DO SITE COM URL: ', window.location);
-        console.log('EVENTO DISPARADO ', event);
-    }
-
-    private addCss() {
-        const link: HTMLLinkElement = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'https://vekro.github.io/ArquivoEstatico/dist/main.css';
-        document.head.appendChild(link);
-    }
 
 }
 
