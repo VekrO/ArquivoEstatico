@@ -1,11 +1,7 @@
 
-import { FeedbackService } from "./services/FeedbackService";
-
-import './styles/styles.css';
+import './styles/main.css';
 
 class Main {
-
-    private feedbackService: FeedbackService = new FeedbackService();
 
     constructor() {
         this.init();
