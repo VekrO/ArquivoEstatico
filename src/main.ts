@@ -26,7 +26,7 @@ class Main {
             if(!iframe) {
                 iframe = document.createElement('iframe');
                 // Passar o site com o iframe.
-                iframe.src = 'https://vekro.github.io/ArquivoEstatico/src/widget.html';
+                iframe.src = 'https://vekro.github.io/Widget/';
                 iframe.classList.add('vokz-iframe');
                 document.body.appendChild(iframe);
             }

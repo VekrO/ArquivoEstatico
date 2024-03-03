@@ -34,11 +34,6 @@ module.exports = {
             template: 'src/index.html',
             chunks: ['main']
         }),
-        new HtmlWebpackPlugin({
-            filename: 'widget.html',
-            template: 'src/widget.html',
-            chunks: ['widget']
-        }),
         new MiniCssExtractPlugin()
     ]
 };
