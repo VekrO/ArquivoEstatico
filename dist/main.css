@@ -16,14 +16,6 @@
     transition: opacity 0.2s ease-out 0s;
     z-index: 99999;
     user-select: none;
-    /* top: 183px;
-    left: 15px; */
-}
-
-.teste {
-    position: absolute;
-    top: 0;
-    right: 0;
 }
 
 .hidden {
